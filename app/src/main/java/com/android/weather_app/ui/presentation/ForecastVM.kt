@@ -36,7 +36,9 @@ class ForecastVM @Inject constructor(
                         }
                     }
                     .collect { response->
-                        _state.value = response as NetworkResult<Weather>
+                        withContext(Dispatchers.Main) {
+                            _state.value = response as NetworkResult<Weather>
+                        }
                     }
             }
         }

@@ -35,4 +35,6 @@ object Constants {
     const val PERCENT: String = "%"
 
     const val FEELS_LIKE: String = "Feels like"
+
+    const val WORK_MANAGER_REQUEST_NAME: String = "Weather-Request"
 }
