@@ -25,4 +25,14 @@ object Constants {
     const val ALERTS: String = "alerts"
 
     const val TIMEOUT_REQUEST: Long = 30
+
+    const val HTTPS_APPEND_TAG: String = "https:"
+
+    const val DEGREE_CELSIUS: String = "°C"
+
+    const val DEGREE: String = "°"
+
+    const val PERCENT: String = "%"
+
+    const val FEELS_LIKE: String = "Feels like"
 }

@@ -10,11 +10,11 @@ data class ForecastDto(
 )
 
 fun Forecast.toDto() = ForecastDto(
-    foreCastDayDto = foreCastDayEntity.map { it.toDto() },
+    foreCastDayDto = foreCastDay.map { it.toDto() },
 )
 
 fun ForecastDto.toDomain() = Forecast(
-    foreCastDayEntity = foreCastDayDto.map { it.toDomain() },
+    foreCastDay = foreCastDayDto.map { it.toDomain() },
 )
 
 object ForecastDtoConstant {
