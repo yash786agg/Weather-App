@@ -8,24 +8,24 @@ import com.android.weather_app.domain.model.CurrentTemp
 
 data class CurrentTempEntity(
     @ColumnInfo(name = TEMP_CELSIUS)
-    val tempCelsius: Double,
+    val tempCelsius: Double?,
 
     @ColumnInfo(name = CURRENT_TEMP_CONDITION)
-    val latestValue: CurrentTempConditionEntity,
+    val latestValue: CurrentTempConditionEntity?,
 
     @ColumnInfo(name = FEELS_LIKE)
-    val feelsLikeTemp: Double
+    val feelsLikeTemp: Double?
 )
 
 fun CurrentTemp.toEntity() = CurrentTempEntity(
     tempCelsius = tempCelsius,
-    latestValue = latestValue.toEntity(),
+    latestValue = latestValue?.toEntity(),
     feelsLikeTemp = feelsLikeTemp
 )
 
 fun CurrentTempEntity.toDomain() = CurrentTemp(
     tempCelsius = tempCelsius,
-    latestValue = latestValue.toDomain(),
+    latestValue = latestValue?.toDomain(),
     feelsLikeTemp = feelsLikeTemp
 )
 

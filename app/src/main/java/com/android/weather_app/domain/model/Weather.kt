@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Weather(
-    val location: Location,
-    val currentTemp: CurrentTemp,
-    val forecast: Forecast
+    val location: Location?,
+    val currentTemp: CurrentTemp?,
+    val forecast: Forecast?
 ) : Parcelable

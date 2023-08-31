@@ -6,15 +6,15 @@ import com.android.weather_app.domain.model.Forecast
 
 data class ForecastEntity(
     @ColumnInfo(name = FORECAST_DAY)
-    val foreCastDayEntity: List<ForecastDayEntity>
+    val foreCastDayEntity: List<ForecastDayEntity>?
 )
 
 fun Forecast.toEntity() = ForecastEntity(
-    foreCastDayEntity = foreCastDay.map { it.toEntity() },
+    foreCastDayEntity = foreCastDay?.map { it.toEntity() },
 )
 
 fun ForecastEntity.toDomain() = Forecast(
-    foreCastDay = foreCastDayEntity.map { it.toDomain() },
+    foreCastDay = foreCastDayEntity?.map { it.toDomain() },
 )
 
 object ForecastEntityConstants {

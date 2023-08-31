@@ -5,8 +5,8 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class ForecastDay(
-    val forecastDate: String,
-    val forecastOfRain: Int,
-    val forecastDays: ForecastDays,
-    val forecastDayHourList: List<ForecastDayHourList>
+    val forecastDate: String?,
+    val forecastOfRain: Int?,
+    val forecastDays: ForecastDays?,
+    val forecastDayHourList: List<ForecastDayHourList>?
 ) : Parcelable

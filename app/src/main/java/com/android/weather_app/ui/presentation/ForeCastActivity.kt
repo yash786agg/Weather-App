@@ -44,7 +44,7 @@ class ForeCastActivity : ComponentActivity() {
                       .build()
 
                     val workerRequest = PeriodicWorkRequestBuilder<CustomWorker>(
-                        repeatInterval = 15,//900L, // 15 minutes
+                        repeatInterval = 900L, // 15 minutes
                         repeatIntervalTimeUnit = TimeUnit.SECONDS
                     ).setBackoffCriteria(
                         backoffPolicy = BackoffPolicy.LINEAR,

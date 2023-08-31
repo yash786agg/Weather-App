@@ -17,26 +17,26 @@ data class WeatherEntity(
     val id: Long,
 
     @ColumnInfo(name = LOCATION)
-    val location: LocationEntity,
+    val location: LocationEntity?,
 
     @ColumnInfo(name = CURRENT_TEMP)
-    val currentTemp: CurrentTempEntity,
+    val currentTemp: CurrentTempEntity?,
 
     @ColumnInfo(name = FORECAST)
-    val forecast: ForecastEntity,
+    val forecast: ForecastEntity?,
 )
 
 fun Weather.toEntity() = WeatherEntity(
     id = 0,
-    location = location.toEntity(),
-    currentTemp = currentTemp.toEntity(),
-    forecast = forecast.toEntity()
+    location = location?.toEntity(),
+    currentTemp = currentTemp?.toEntity(),
+    forecast = forecast?.toEntity()
 )
 
 fun WeatherEntity.toDomain() = Weather(
-    location = location.toDomain(),
-    currentTemp = currentTemp.toDomain(),
-    forecast = forecast.toDomain()
+    location = location?.toDomain(),
+    currentTemp = currentTemp?.toDomain(),
+    forecast = forecast?.toDomain()
 )
 
 object WeatherEntityConstants {

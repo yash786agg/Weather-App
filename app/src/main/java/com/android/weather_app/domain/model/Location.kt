@@ -5,6 +5,6 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Location(
-    val name: String,
-    val localTime: String
+    val name: String?,
+    val localTime: String?
 ) : Parcelable

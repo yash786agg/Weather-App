@@ -8,25 +8,25 @@ import com.squareup.moshi.Json
 
 data class WeatherDto(
     @field:Json(name = LOCATION)
-    val location: LocationDto,
+    val location: LocationDto?,
 
     @field:Json(name = CURRENT_TEMP)
-    val currentTemp: CurrentTempDto,
+    val currentTemp: CurrentTempDto?,
 
     @field:Json(name = FORECAST)
-    val forecast: ForecastDto,
+    val forecast: ForecastDto?,
 )
 
 fun Weather.toDto() = WeatherDto(
-    location = location.toDto(),
-    currentTemp = currentTemp.toDto(),
-    forecast = forecast.toDto()
+    location = location?.toDto(),
+    currentTemp = currentTemp?.toDto(),
+    forecast = forecast?.toDto()
 )
 
 fun WeatherDto.toDomain() = Weather(
-    location = location.toDomain(),
-    currentTemp = currentTemp.toDomain(),
-    forecast = forecast.toDomain()
+    location = location?.toDomain(),
+    currentTemp = currentTemp?.toDomain(),
+    forecast = forecast?.toDomain()
 )
 
 object WeatherDtoConstant {

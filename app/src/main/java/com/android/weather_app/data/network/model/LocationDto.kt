@@ -7,9 +7,9 @@ import com.squareup.moshi.Json
 
 data class LocationDto(
     @field:Json(name = NAME)
-    val name: String,
+    val name: String?,
     @field:Json(name = LOCALTIME)
-    val localTime: String,
+    val localTime: String?,
 )
 
 fun Location.toDto() = LocationDto(

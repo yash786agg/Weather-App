@@ -8,25 +8,25 @@ import com.squareup.moshi.Json
 
 data class ForecastDayHourListDto(
     @field:Json(name = TIME)
-    val time: String,
+    val time: String?,
 
     @field:Json(name = TEMP_CELSIUS)
-    val foreCastDayTemp: Double,
+    val foreCastDayTemp: Double?,
 
     @field:Json(name = FORECAST_DAY_CONDITION)
-    val foreCastDayCondition: ForeCastDayConditionDto,
+    val foreCastDayCondition: ForeCastDayConditionDto?,
 )
 
 fun ForecastDayHourList.toDto() = ForecastDayHourListDto(
     time = time,
     foreCastDayTemp = foreCastDayTemp,
-    foreCastDayCondition = foreCastDayCondition.toDto()
+    foreCastDayCondition = foreCastDayCondition?.toDto()
 )
 
 fun ForecastDayHourListDto.toDomain() = ForecastDayHourList(
     time = time,
     foreCastDayTemp = foreCastDayTemp,
-    foreCastDayCondition = foreCastDayCondition.toDomain(),
+    foreCastDayCondition = foreCastDayCondition?.toDomain(),
 )
 
 

@@ -8,25 +8,25 @@ import com.squareup.moshi.Json
 
 data class ForecastDaysDto(
     @field:Json(name = MAX_TEMP_CELSIUS)
-    val maxTempCelsius: Double,
+    val maxTempCelsius: Double?,
 
     @field:Json(name = MIN_TEMP_CELSIUS)
-    val minTempCelsius: Double,
+    val minTempCelsius: Double?,
 
     @field:Json(name = FORECAST_DAYS_CONDITION)
-    val foreCastDayCondition: ForeCastDayConditionDto,
+    val foreCastDayCondition: ForeCastDayConditionDto?,
 )
 
 fun ForecastDays.toDto() = ForecastDaysDto(
     maxTempCelsius = maxTempCelsius,
     minTempCelsius = minTempCelsius,
-    foreCastDayCondition = foreCastDayCondition.toDto()
+    foreCastDayCondition = foreCastDayCondition?.toDto()
 )
 
 fun ForecastDaysDto.toDomain() = ForecastDays(
     maxTempCelsius = maxTempCelsius,
     minTempCelsius = minTempCelsius,
-    foreCastDayCondition = foreCastDayCondition.toDomain()
+    foreCastDayCondition = foreCastDayCondition?.toDomain()
 )
 
 object ForecastDaysDtoConstant {

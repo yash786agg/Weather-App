@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class ForecastDayHourList(
-    val time: String,
-    val foreCastDayTemp: Double,
-    val foreCastDayCondition: ForeCastDayCondition,
+    val time: String?,
+    val foreCastDayTemp: Double?,
+    val foreCastDayCondition: ForeCastDayCondition?,
 ) : Parcelable

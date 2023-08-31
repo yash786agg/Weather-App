@@ -5,6 +5,6 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class ForeCastDayCondition(
-    val conditionText: String,
-    val conditionIcon: String,
+    val conditionText: String?,
+    val conditionIcon: String?,
 ) : Parcelable

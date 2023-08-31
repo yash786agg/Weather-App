@@ -8,25 +8,25 @@ import com.android.weather_app.domain.model.ForecastDayHourList
 
 data class ForecastDayHourListEntity(
     @ColumnInfo(name = TIME)
-    val time: String,
+    val time: String?,
 
     @ColumnInfo(name = TEMP_CELSIUS)
-    val foreCastDayTemp: Double,
+    val foreCastDayTemp: Double?,
 
     @ColumnInfo(name = FORECAST_DAY_CONDITION)
-    val foreCastDayCondition: ForeCastDayConditionEntity,
+    val foreCastDayCondition: ForeCastDayConditionEntity?,
 )
 
 fun ForecastDayHourList.toEntity() = ForecastDayHourListEntity(
     time = time,
     foreCastDayTemp = foreCastDayTemp,
-    foreCastDayCondition = foreCastDayCondition.toEntity()
+    foreCastDayCondition = foreCastDayCondition?.toEntity()
 )
 
 fun ForecastDayHourListEntity.toDomain() = ForecastDayHourList(
     time = time,
     foreCastDayTemp = foreCastDayTemp,
-    foreCastDayCondition = foreCastDayCondition.toDomain(),
+    foreCastDayCondition = foreCastDayCondition?.toDomain(),
 )
 
 

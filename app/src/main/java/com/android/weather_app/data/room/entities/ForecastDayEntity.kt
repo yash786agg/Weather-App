@@ -9,30 +9,30 @@ import com.android.weather_app.domain.model.ForecastDay
 
 data class ForecastDayEntity(
     @ColumnInfo(name = DATE)
-    val forecastDate: String,
+    val forecastDate: String?,
 
     @ColumnInfo(name = CHANCE_OF_RAIN)
-    val forecastOfRain: Int,
+    val forecastOfRain: Int?,
 
     @ColumnInfo(name = DAY)
-    val forecastDays: ForecastDaysEntity,
+    val forecastDays: ForecastDaysEntity?,
 
     @ColumnInfo(name = HOUR)
-    val forecastDayHourList: List<ForecastDayHourListEntity>,
+    val forecastDayHourList: List<ForecastDayHourListEntity>?,
 )
 
 fun ForecastDay.toEntity() = ForecastDayEntity(
     forecastDate = forecastDate,
     forecastOfRain = forecastOfRain,
-    forecastDays = forecastDays.toEntity(),
-    forecastDayHourList = forecastDayHourList.map { it.toEntity() }
+    forecastDays = forecastDays?.toEntity(),
+    forecastDayHourList = forecastDayHourList?.map { it.toEntity() }
 )
 
 fun ForecastDayEntity.toDomain() = ForecastDay(
     forecastDate = forecastDate,
     forecastOfRain = forecastOfRain,
-    forecastDays = forecastDays.toDomain(),
-    forecastDayHourList = forecastDayHourList.map { it.toDomain() }
+    forecastDays = forecastDays?.toDomain(),
+    forecastDayHourList = forecastDayHourList?.map { it.toDomain() }
 )
 
 

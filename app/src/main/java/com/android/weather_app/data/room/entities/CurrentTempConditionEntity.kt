@@ -7,10 +7,10 @@ import com.android.weather_app.domain.model.CurrentTempCondition
 
 data class CurrentTempConditionEntity(
     @ColumnInfo(name = TEXT_VALUE)
-    val conditionText: String,
+    val conditionText: String?,
 
     @ColumnInfo(name = ICON_VALUE)
-    val conditionIcon: String,
+    val conditionIcon: String?,
 )
 
 

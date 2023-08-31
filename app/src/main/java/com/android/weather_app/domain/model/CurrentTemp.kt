@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class CurrentTemp(
-    val tempCelsius: Double,
-    val latestValue: CurrentTempCondition,
-    val feelsLikeTemp: Double
+    val tempCelsius: Double?,
+    val latestValue: CurrentTempCondition?,
+    val feelsLikeTemp: Double?
 ): Parcelable

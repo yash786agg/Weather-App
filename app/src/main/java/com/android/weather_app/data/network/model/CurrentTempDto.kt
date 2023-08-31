@@ -9,24 +9,24 @@ import com.squareup.moshi.Json
 
 data class CurrentTempDto(
     @field:Json(name = TEMP_CELSIUS)
-    val tempCelsius: Double,
+    val tempCelsius: Double?,
 
     @field:Json(name = CURRENT_TEMP_CONDITION)
-    val latestValue: CurrentTempConditionDto,
+    val latestValue: CurrentTempConditionDto?,
 
     @field:Json(name = FEELS_LIKE)
-    val feelsLikeTemp: Double
+    val feelsLikeTemp: Double?
 )
 
 fun CurrentTemp.toDto() = CurrentTempDto(
     tempCelsius = tempCelsius,
-    latestValue = latestValue.toDto(),
+    latestValue = latestValue?.toDto(),
     feelsLikeTemp = feelsLikeTemp
 )
 
 fun CurrentTempDto.toDomain() = CurrentTemp(
     tempCelsius = tempCelsius,
-    latestValue = latestValue.toDomain(),
+    latestValue = latestValue?.toDomain(),
     feelsLikeTemp = feelsLikeTemp
 )
 

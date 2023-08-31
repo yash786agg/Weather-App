@@ -47,7 +47,7 @@ fun ForeCastScreenAPICall(viewState: NetworkResult<Weather>) {
         when (viewState) {
             is NetworkResult.Loading -> {
                 Log.e("ForeCast", "MainActivity Loading: ${viewState.show}")
-                if(viewState.show)
+                if (viewState.show)
                     ShowCircularProgressIndicator(show = true)
                 else
                     ShowCircularProgressIndicator(show = false)
@@ -74,7 +74,7 @@ fun ForeCastScreen(weatherData: Weather) {
             .fillMaxSize()
     ) {
         item {
-            convertDateTimeFormat(weatherData.location.localTime)?.let { time ->
+            convertDateTimeFormat(weatherData.location?.localTime)?.let { time ->
                 Text(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -93,32 +93,36 @@ fun ForeCastScreen(weatherData: Weather) {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                Text(
-                    text = weatherData.location.name,
-                    fontSize = 22.sp,
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center
-                )
+                weatherData.location?.name?.let { location ->
+                    Text(
+                        text = location,
+                        fontSize = 22.sp,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center
+                    )
+                }
 
-                Text(
-                    modifier = Modifier.padding(top = 10.dp),
-                    text = weatherData.currentTemp.latestValue.conditionText,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Normal,
-                    textAlign = TextAlign.Center
-                )
+                weatherData.currentTemp?.latestValue?.conditionText?.let { condition ->
+                    Text(
+                        modifier = Modifier.padding(top = 10.dp),
+                        text = condition,
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Normal,
+                        textAlign = TextAlign.Center
+                    )
+                }
 
                 Image(
                     modifier = Modifier
                         .size(80.dp)
                         .padding(top = 10.dp),
-                    painter = rememberAsyncImagePainter("${HTTPS_APPEND_TAG}${weatherData.currentTemp.latestValue.conditionIcon}"),
+                    painter = rememberAsyncImagePainter("${HTTPS_APPEND_TAG}${weatherData.currentTemp?.latestValue?.conditionIcon}"),
                     contentDescription = null,
                 )
 
                 Text(
                     modifier = Modifier.padding(top = 10.dp),
-                    text = "${weatherData.currentTemp.tempCelsius.toInt()}$DEGREE_CELSIUS",
+                    text = "${weatherData.currentTemp?.tempCelsius?.toInt()}$DEGREE_CELSIUS",
                     fontSize = 32.sp,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center
@@ -126,7 +130,7 @@ fun ForeCastScreen(weatherData: Weather) {
 
                 Text(
                     modifier = Modifier.padding(top = 10.dp),
-                    text = "$FEELS_LIKE ${weatherData.currentTemp.feelsLikeTemp.toInt()}$DEGREE_CELSIUS",
+                    text = "$FEELS_LIKE ${weatherData.currentTemp?.feelsLikeTemp?.toInt()}$DEGREE_CELSIUS",
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Normal,
                     textAlign = TextAlign.Center
@@ -136,11 +140,11 @@ fun ForeCastScreen(weatherData: Weather) {
 
         item {
             Spacer(modifier = Modifier.height(20.dp))
-            TodayForecastContent(weatherData.forecast)
+            weatherData.forecast?.let { forecast -> TodayForecastContent(forecast) }
         }
 
         item {
-            ForecastContent(weatherData.forecast)
+            weatherData.forecast?.let { forecast -> ForecastContent(forecast) }
         }
     }
 }
@@ -152,40 +156,44 @@ fun TodayForecastContent(forecast: Forecast) {
             .fillMaxWidth(),
         contentPadding = PaddingValues(horizontal = 16.dp)
     ) {
-        val forecastTodayData = forecast.foreCastDay[0].forecastDayHourList
+        if(forecast.foreCastDay?.isNotEmpty() == true){
+            val forecastTodayData = forecast.foreCastDay[0].forecastDayHourList
 
-        items(forecastTodayData.size) { item ->
-            Column(
-                modifier = Modifier
-                    .width(50.dp)
-                    .padding(5.dp)
-            ) {
-                convertTo12HourFormat(forecastTodayData[item].time)?.let { time ->
-                    Text(
-                        text = time,
-                        fontSize = 10.sp,
-                        textAlign = TextAlign.Center,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.align(Alignment.CenterHorizontally)
-                    )
+            forecastTodayData?.size?.let { size ->
+                items(size) { item ->
+                    Column(
+                        modifier = Modifier
+                            .width(50.dp)
+                            .padding(5.dp)
+                    ) {
+                        convertTo12HourFormat(forecastTodayData[item].time)?.let { time ->
+                            Text(
+                                text = time,
+                                fontSize = 10.sp,
+                                textAlign = TextAlign.Center,
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier.align(Alignment.CenterHorizontally)
+                            )
+                        }
+
+                        Image(
+                            modifier = Modifier
+                                .size(50.dp),
+                            painter = rememberAsyncImagePainter("${HTTPS_APPEND_TAG}${forecastTodayData[item].foreCastDayCondition?.conditionIcon}"),
+                            contentDescription = null,
+                        )
+
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        Text(
+                            text = "${forecastTodayData[item].foreCastDayTemp?.toInt()}$DEGREE",
+                            fontSize = 14.sp,
+                            textAlign = TextAlign.Center,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.align(Alignment.CenterHorizontally)
+                        )
+                    }
                 }
-
-                Image(
-                    modifier = Modifier
-                        .size(50.dp),
-                    painter = rememberAsyncImagePainter("${HTTPS_APPEND_TAG}${forecastTodayData[item].foreCastDayCondition.conditionIcon}"),
-                    contentDescription = null,
-                )
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                Text(
-                    text = "${forecastTodayData[item].foreCastDayTemp.toInt()}$DEGREE",
-                    fontSize = 14.sp,
-                    textAlign = TextAlign.Center,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
-                )
             }
         }
     }
@@ -205,53 +213,58 @@ fun ForecastContent(forecast: Forecast) {
                 .height(150.dp)
         ) {
             val forecastData = forecast.foreCastDay
-            items(forecastData.size) { item ->
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 10.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        modifier = Modifier.weight(2f),
-                        text = getDayOfWeekFromDate(forecastData[item].forecastDate),
-                        fontSize = 14.sp,
-                        textAlign = TextAlign.Start,
-                        fontWeight = FontWeight.Bold,
-                    )
-
-                    Text(
-                        modifier = Modifier.weight(1f),
-                        text = "${forecastData[item].forecastOfRain}$PERCENT",
-                        fontSize = 14.sp,
-                        textAlign = TextAlign.Start,
-                        fontWeight = FontWeight.Bold,
-                    )
-
-                    Image(
+            forecastData?.size?.let { size ->
+                items(size) { item ->
+                    Row(
                         modifier = Modifier
-                            .size(50.dp)
-                            .weight(1f),
-                        painter = rememberAsyncImagePainter("${HTTPS_APPEND_TAG}${forecastData[item].forecastDays.foreCastDayCondition.conditionIcon}"),
-                        contentDescription = null,
-                    )
+                            .fillMaxWidth()
+                            .padding(horizontal = 10.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            modifier = Modifier.weight(2f),
+                            text = getDayOfWeekFromDate(forecastData[item].forecastDate),
+                            fontSize = 14.sp,
+                            textAlign = TextAlign.Start,
+                            fontWeight = FontWeight.Bold,
+                        )
 
-                    Text(
-                        modifier = Modifier.weight(1f),
-                        text = "${forecastData[item].forecastDays.minTempCelsius.toInt()}$DEGREE",
-                        fontSize = 14.sp,
-                        textAlign = TextAlign.End,
-                        fontWeight = FontWeight.Bold,
-                    )
+                        Text(
+                            modifier = Modifier.weight(1f),
+                            text = "${forecastData[item].forecastOfRain}$PERCENT",
+                            fontSize = 14.sp,
+                            textAlign = TextAlign.Start,
+                            fontWeight = FontWeight.Bold,
+                        )
 
-                    Text(
-                        modifier = Modifier.weight(1f),
-                        text = "${forecastData[item].forecastDays.maxTempCelsius.toInt()}$DEGREE",
-                        fontSize = 14.sp,
-                        textAlign = TextAlign.End,
-                        fontWeight = FontWeight.Bold,
-                    )
+                        Image(
+                            modifier = Modifier
+                                .size(50.dp)
+                                .weight(1f),
+                            painter = rememberAsyncImagePainter(
+                                HTTPS_APPEND_TAG +
+                                        "${forecastData[item].forecastDays?.foreCastDayCondition?.conditionIcon}"
+                            ),
+                            contentDescription = null,
+                        )
+
+                        Text(
+                            modifier = Modifier.weight(1f),
+                            text = "${forecastData[item].forecastDays?.minTempCelsius?.toInt()}$DEGREE",
+                            fontSize = 14.sp,
+                            textAlign = TextAlign.End,
+                            fontWeight = FontWeight.Bold,
+                        )
+
+                        Text(
+                            modifier = Modifier.weight(1f),
+                            text = "${forecastData[item].forecastDays?.maxTempCelsius?.toInt()}$DEGREE",
+                            fontSize = 14.sp,
+                            textAlign = TextAlign.End,
+                            fontWeight = FontWeight.Bold,
+                        )
+                    }
                 }
             }
         }
@@ -260,7 +273,7 @@ fun ForecastContent(forecast: Forecast) {
 
 @Composable
 private fun ShowCircularProgressIndicator(show: Boolean) {
-    if(show){
+    if (show) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             CircularProgressIndicator(
                 color = Color.Black

@@ -1,5 +1,6 @@
 package com.android.weather_app.data.di
 
+import android.app.Application
 import com.android.weather_app.data.network.api.WeatherAPIService
 import com.android.weather_app.data.repository.ForecastRepository
 import com.android.weather_app.data.room.db.WeatherDao
@@ -17,8 +18,9 @@ object RepositoryModule {
     @Provides
     fun provideForecastRepository(
         weatherDao: WeatherDao,
-        weatherApi: WeatherAPIService
+        weatherApi: WeatherAPIService,
+        application: Application
     ): ForecastRepositoryImpl {
-        return ForecastRepository(weatherDao, weatherApi)
+        return ForecastRepository(weatherDao, weatherApi,application)
     }
 }

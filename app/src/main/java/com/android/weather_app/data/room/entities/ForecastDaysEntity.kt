@@ -8,25 +8,25 @@ import com.android.weather_app.domain.model.ForecastDays
 
 data class ForecastDaysEntity(
     @ColumnInfo(name = MAX_TEMP_CELSIUS)
-    val maxTempCelsius: Double,
+    val maxTempCelsius: Double?,
 
     @ColumnInfo(name = MIN_TEMP_CELSIUS)
-    val minTempCelsius: Double,
+    val minTempCelsius: Double?,
 
     @ColumnInfo(name = FORECAST_DAYS_CONDITION)
-    val foreCastDayCondition: ForeCastDayConditionEntity,
+    val foreCastDayCondition: ForeCastDayConditionEntity?,
 )
 
 fun ForecastDays.toEntity() = ForecastDaysEntity(
     maxTempCelsius = maxTempCelsius,
     minTempCelsius = minTempCelsius,
-    foreCastDayCondition = foreCastDayCondition.toEntity()
+    foreCastDayCondition = foreCastDayCondition?.toEntity()
 )
 
 fun ForecastDaysEntity.toDomain() = ForecastDays(
     maxTempCelsius = maxTempCelsius,
     minTempCelsius = minTempCelsius,
-    foreCastDayCondition = foreCastDayCondition.toDomain()
+    foreCastDayCondition = foreCastDayCondition?.toDomain()
 )
 
 object ForecastDaysEntityConstants {

@@ -9,30 +9,30 @@ import com.squareup.moshi.Json
 
 data class ForecastDayDto(
     @field:Json(name = DATE)
-    val forecastDate: String,
+    val forecastDate: String?,
 
     @field:Json(name = CHANCE_OF_RAIN)
-    val forecastOfRain: Int,
+    val forecastOfRain: Int?,
 
     @field:Json(name = DAY)
-    val forecastDays: ForecastDaysDto,
+    val forecastDays: ForecastDaysDto?,
 
     @field:Json(name = HOUR)
-    val forecastDayHourList: List<ForecastDayHourListDto>
+    val forecastDayHourList: List<ForecastDayHourListDto>?
 )
 
 fun ForecastDay.toDto() = ForecastDayDto(
     forecastDate = forecastDate,
     forecastOfRain = forecastOfRain,
-    forecastDays = forecastDays.toDto(),
-    forecastDayHourList = forecastDayHourList.map { it.toDto() }
+    forecastDays = forecastDays?.toDto(),
+    forecastDayHourList = forecastDayHourList?.map { it.toDto() }
 )
 
 fun ForecastDayDto.toDomain() = ForecastDay(
     forecastDate = forecastDate,
     forecastOfRain = forecastOfRain,
-    forecastDays = forecastDays.toDomain(),
-    forecastDayHourList = forecastDayHourList.map { it.toDomain() }
+    forecastDays = forecastDays?.toDomain(),
+    forecastDayHourList = forecastDayHourList?.map { it.toDomain() }
 )
 
 

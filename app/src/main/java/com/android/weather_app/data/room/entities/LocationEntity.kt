@@ -7,10 +7,10 @@ import com.android.weather_app.domain.model.Location
 
 data class LocationEntity(
     @ColumnInfo(name = NAME)
-    val name: String,
+    val name: String?,
 
     @ColumnInfo(name = LOCALTIME)
-    val localTime: String,
+    val localTime: String?,
 )
 
 fun Location.toEntity() = LocationEntity(

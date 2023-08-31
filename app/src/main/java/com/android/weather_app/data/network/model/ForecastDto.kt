@@ -6,15 +6,15 @@ import com.squareup.moshi.Json
 
 data class ForecastDto(
     @field:Json(name = FORECAST_DAY)
-    val foreCastDayDto: List<ForecastDayDto>
+    val foreCastDayDto: List<ForecastDayDto>?
 )
 
 fun Forecast.toDto() = ForecastDto(
-    foreCastDayDto = foreCastDay.map { it.toDto() },
+    foreCastDayDto = foreCastDay?.map { it.toDto() },
 )
 
 fun ForecastDto.toDomain() = Forecast(
-    foreCastDay = foreCastDayDto.map { it.toDomain() },
+    foreCastDay = foreCastDayDto?.map { it.toDomain() },
 )
 
 object ForecastDtoConstant {

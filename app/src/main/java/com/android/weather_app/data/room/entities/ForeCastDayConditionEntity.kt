@@ -7,10 +7,10 @@ import com.android.weather_app.domain.model.ForeCastDayCondition
 
 data class ForeCastDayConditionEntity(
     @ColumnInfo(name = TEXT_VALUE)
-    val conditionText: String,
+    val conditionText: String?,
 
     @ColumnInfo(name = ICON_VALUE)
-    val conditionIcon: String,
+    val conditionIcon: String?,
 )
 
 fun ForeCastDayCondition.toEntity() = ForeCastDayConditionEntity(

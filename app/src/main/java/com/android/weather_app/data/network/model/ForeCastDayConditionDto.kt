@@ -7,10 +7,10 @@ import com.squareup.moshi.Json
 
 data class ForeCastDayConditionDto(
     @field:Json(name = TEXT_VALUE)
-    val conditionText: String,
+    val conditionText: String?,
 
     @field:Json(name = ICON_VALUE)
-    val conditionIcon: String,
+    val conditionIcon: String?,
 )
 
 fun ForeCastDayCondition.toDto() = ForeCastDayConditionDto(
