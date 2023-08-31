@@ -11,7 +11,7 @@ It utilizes background polling through Work Manager, updating weather data every
 </p>
 
 ## Download
-Go to the [Demo APK](https://https://github.com/yash786agg/Weather-App/tree/master/demo_apk) to download the latest APK.
+Go to the [Demo APK](https://github.com/yash786agg/Weather-App/tree/master/demo_apk) to download the latest APK.
 
 <img src="/screenshots/Weather-App-demo.gif" align="right" width="32%"/>
 
