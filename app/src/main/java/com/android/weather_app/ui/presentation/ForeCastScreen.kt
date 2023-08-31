@@ -1,6 +1,6 @@
 package com.android.weather_app.ui.presentation
 
-import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -24,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -46,7 +47,6 @@ fun ForeCastScreenAPICall(viewState: NetworkResult<Weather>) {
     viewState.let {
         when (viewState) {
             is NetworkResult.Loading -> {
-                Log.e("ForeCast", "MainActivity Loading: ${viewState.show}")
                 if (viewState.show)
                     ShowCircularProgressIndicator(show = true)
                 else
@@ -55,12 +55,15 @@ fun ForeCastScreenAPICall(viewState: NetworkResult<Weather>) {
 
             is NetworkResult.Error -> {
                 val errorMsg = viewState.errorMsg
-                Log.e("ForeCast", "MainActivity errorMsg: $errorMsg")
+                val context = LocalContext.current
+                Toast.makeText(
+                    context, errorMsg,
+                    Toast.LENGTH_LONG
+                ).show()
             }
 
             is NetworkResult.Success -> {
                 val data = viewState.data
-                Log.e("ForeCast", "MainActivity success Data: $data")
                 ForeCastScreen(weatherData = data)
             }
         }
@@ -156,7 +159,7 @@ fun TodayForecastContent(forecast: Forecast) {
             .fillMaxWidth(),
         contentPadding = PaddingValues(horizontal = 16.dp)
     ) {
-        if(forecast.foreCastDay?.isNotEmpty() == true){
+        if (forecast.foreCastDay?.isNotEmpty() == true) {
             val forecastTodayData = forecast.foreCastDay[0].forecastDayHourList
 
             forecastTodayData?.size?.let { size ->
@@ -230,9 +233,11 @@ fun ForecastContent(forecast: Forecast) {
                             fontWeight = FontWeight.Bold,
                         )
 
+                        val forecastOfRain =
+                            "${forecastData[item].forecastDays?.forecastOfRain}$PERCENT"
                         Text(
                             modifier = Modifier.weight(1f),
-                            text = "${forecastData[item].forecastOfRain}$PERCENT",
+                            text = forecastOfRain,
                             fontSize = 14.sp,
                             textAlign = TextAlign.Start,
                             fontWeight = FontWeight.Bold,

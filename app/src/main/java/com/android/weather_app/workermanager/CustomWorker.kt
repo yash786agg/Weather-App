@@ -1,8 +1,6 @@
 package com.android.weather_app.workermanager
 
 import android.content.Context
-import android.util.Log
-import android.widget.Toast
 import androidx.work.WorkerParameters
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
@@ -27,14 +25,11 @@ class CustomWorker @AssistedInject constructor(
 ) : CoroutineWorker(appContext, workerParams) {
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
-        // Reference:- https://youtu.be/O9_RSYSmeIE
-        Toast.makeText(applicationContext,"CustomWorker doWork API request triggered",Toast.LENGTH_LONG).show()
+        // Reference Link:- https://youtu.be/O9_RSYSmeIE
         try {
-            Log.e("ForeCast", "CustomWorker doWork API request triggered")
             if (checkConnection(appContext)){
                 val response = weatherApi.getForecastDataAsync()
                 if (response.isSuccessful && response.code() == 200) {
-                    Log.e("ForeCast", "CustomWorker doWork API request triggered success:- ${response.isSuccessful}")
                     val forecastData = response.body()
                     forecastData?.let { weatherDto ->
                         val data = weatherDto.toDomain()
@@ -47,7 +42,6 @@ class CustomWorker @AssistedInject constructor(
             } else
                 Result.retry()
         } catch (e: Exception) {
-            Log.e("ForeCast", "Error CustomWorker doWork API request triggered Error")
             if(e is UnknownHostException)
                 Result.retry()
             else

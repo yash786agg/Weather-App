@@ -1,7 +1,6 @@
 package com.android.weather_app.data.repository
 
 import android.app.Application
-import android.util.Log
 import com.android.weather_app.R
 import com.android.weather_app.common.InternetConnection.checkConnection
 import com.android.weather_app.data.network.api.WeatherAPIService
@@ -24,7 +23,6 @@ constructor(
 ) : ForecastRepositoryImpl {
     override suspend fun getForecastData() = flow {
         returnCachedData().let { cacheData ->
-            Log.e("ForeCast", "fetchForeCastData cacheData: $cacheData")
             if (cacheData == null) {
                 if (checkConnection(application)) {
                     val response = weatherApi.getForecastDataAsync()

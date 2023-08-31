@@ -6,7 +6,7 @@ object Constants {
 
     const val FORECAST_API: String = "forecast.json"
 
-    const val WEATHER_API_KEY: String = "2d3afc1e4a6144d3873175455231602"
+    const val WEATHER_API_KEY: String = "2d3afc1e4a6144d3873175455231602"//""696b7f2766264122bea152309233108
 
     const val WEATHER_API_KEY_TAG: String = "key"
 
